@@ -1,9 +1,30 @@
 <div class="container" ng-controller="loginCtrl">
-    <form  ng-submit="submit()">
-        <input type="email" ng-model="user.email" />
-        <input type="password" ng-model="user.pwd" />
-        <button>Connexion</button>
-
+    <form  class="ui fluid form segment" ng-submit="submit()">
+        <div class="two fields">
+            <div class="required field">
+                <label>Username</label>
+                <div class="ui icon input">
+                    <input type="text" placeholder="Username" ng-model="user.username">
+                    <i class="user icon"></i>
+                </div>
+            </div>
+            <div class="required field">
+                <label>Password</label>
+                <div class="ui icon input">
+                    <input type="password" placeholder="Password" ng-model="user.pwd">
+                    <i class="lock icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="one fields">
+            <!--<div class="ui buttons field">
+                <div class="ui button" ng-click="cancel()">Cancel</div>
+                <div class="or" data-text="ou"></div>
+                <button class="ui positive button">Connect</button>
+            </div>-->
+            <button class="positive ui button">
+                 Connect
+            </button>
+        </div>
     </form>
-    <button ng-click="reset()">Annuler</button>
 </div>

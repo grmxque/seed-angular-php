@@ -7,22 +7,27 @@ var app = angular.module('myApp.login', ['ngRoute'])
         templateUrl: 'login/login.html',
         controller: 'loginCtrl'
     });
+
+    $routeProvider.when('/welcome', {
+        templateUrl: 'login/welcome.html',
+        controller: 'loginCtrl'
+    });
 }]);
 
-app.controller('loginCtrl',['$scope', function($scope) {
+app.controller('loginCtrl',['$scope', '$location', function($scope,$location) {
     $scope.user = {
-        email : "" ,
+        username : "" ,
         pwd : ""
     }
 
     $scope.submit = function() {
-        // TODO: Lier au backend
-        
+        $location.path('/dashboard');
+        console.log("Connexion succesfull");
     }
 
-    $scope.reset = function() {
+    $scope.cancel = function() {
         $scope.user = {
-            email : "" ,
+            username : "" ,
             pwd : ""
         }
     }
