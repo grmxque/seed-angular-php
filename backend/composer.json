@@ -2,6 +2,7 @@
     "require": {
         "monolog/monolog": "1.2.*",
         "slim/slim": "2.*",
+        "slim/extras": "^2.0",
         "pimple/pimple":"1.*",
         "doctrine/orm": "2.3.6",
         "symfony/serializer" : "*"

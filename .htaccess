@@ -1,0 +1,6 @@
+RewriteEngine On
+
+DirectoryIndex index.html
+
+RewriteBase /testjerem/
+RewriteRule ^api index.php [QSA,L]

@@ -6,8 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Twig_Extensions_' => array($vendorDir . '/slim/extras/Views/Extension'),
     'Symfony\\Component\\Serializer\\' => array($vendorDir . '/symfony/serializer'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Slim\\Extras' => array($vendorDir . '/slim/extras'),
     'Slim' => array($vendorDir . '/slim/slim'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
     'Monolog' => array($vendorDir . '/monolog/monolog/src'),
