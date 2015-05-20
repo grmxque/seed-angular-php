@@ -26,7 +26,13 @@ class DbConfigurer {
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
         $this->entityManager = EntityManager::create($this->getDbParams(), $config);
-        $this->entityManager->getConnection()->connect();
+
+        try{
+            $this->entityManager->getConnection()->connect();
+        }catch(\Exception $e){
+            $this->logger->addCritical("Echec de la connection à la base de données: ".$e->getCode()." - ".$e->getMessage());
+        }
+
     }
 
     private function getDbParams() {

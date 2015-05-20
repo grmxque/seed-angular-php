@@ -18,11 +18,8 @@ class ControllerConfigurer {
     public $serializer;
 
     public function __construct() {
-        // Gestion des routes
         $this->app = Slim::getInstance('api');
-        // Logger de l'api
         $this->logger = Registry::getInstance('api');
-        // Formattage JSON
         $this->serializer = SerializerBuilder::create()->build();
     }
 
