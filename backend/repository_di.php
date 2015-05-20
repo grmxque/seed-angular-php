@@ -1,9 +1,12 @@
 <?php
 
-/*$container ['entityManagerTemplate'] = $container->share ( function ($c) {
-	$entityManagerFactory = new EntityManagerFactory ();
-	return new EntityManagerTemplate ( $entityManagerFactory->getEntityManager () );
-});
-$container ['filterHelper'] = function ($c) {
-    return new FilterHelper($c['entityManagerTemplate']);
-};*/
+use config\DbConfigurer;
+
+$container['entityManager'] = function ($c){
+    $dbConfigurer = new DbConfigurer();
+
+    //die(var_dump($dbConfigurer->getEntityManager()));
+    return $dbConfigurer->getEntityManager();
+};
+
+$container['entityManager'];
