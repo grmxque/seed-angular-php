@@ -22,8 +22,8 @@ class AppConfigurer {
 
     public function configure(\Slim\Slim $app){
         $app->setName('api');
-        $app->contentType ( 'application/json; charset=utf-8' );
-        $app->response->headers->set ( 'Acces-Control-Allow-Origin', '*' );
+        $app->response->headers->set('Content-Type', 'application/json');
+        $app->response->headers->set ('Acces-Control-Allow-Origin','*');
 
         $app->config ( array (
             'debug' => true

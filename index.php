@@ -33,10 +33,6 @@ $app = new \Slim\Slim();
 $appConfigurer = new AppConfigurer();
 $appConfigurer->configure($app);
 
-$app->get('/api/test', function () {
-
-});
-
 /* ************************* PIMPLE (DI) ************************* */
 include_once('backend/pimple_di.php');
 // Repository
