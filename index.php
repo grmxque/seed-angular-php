@@ -1,6 +1,9 @@
 <?php
 
+use config\AppConfigurer;
+
 /* ************************* SETTINGS SERVEUR ************************* */
+session_cache_limiter(false);
 session_start ();
 ini_set ( 'default_charset', 'UTF-8' );
 ini_set ( "memory_limit", - 1 );
@@ -11,6 +14,8 @@ error_reporting ( E_ALL | E_STRICT );
 require 'backend/vendor/autoload.php';
 
 /* ************************* REQUIRE ONCE ************************* */
+// Config
+include_once('backend/config.php');
 // Utils
 include_once('backend/utils.php');
 // Repository
@@ -25,12 +30,11 @@ include_once('backend/entity.php');
 /* ************************* SLIM (API)************************* */
 $app = new \Slim\Slim();
 
-$app->get('/api/hello/:name', function ($name) {
-    echo "Hello, $name";
-});
+$appConfigurer = new AppConfigurer();
+$appConfigurer->configure($app);
 
 $app->get('/api/test', function () {
-    echo "Hello";
+
 });
 
 /* ************************* PIMPLE (DI) ************************* */

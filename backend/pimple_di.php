@@ -1,3 +1,3 @@
 <?php
-$container = new Pimple ();
+$container = new \Pimple\Container();
 ?>

@@ -1,10 +1,10 @@
 {
     "require": {
-        "monolog/monolog": "1.2.*",
-        "slim/slim": "2.*",
-        "slim/extras": "^2.0",
-        "pimple/pimple":"1.*",
+        "monolog/monolog": "1.13.1",
+        "slim/slim": "2.6.2",
+        "slim/extras": "2.0.3",
+        "pimple/pimple":"v3.0.0",
         "doctrine/orm": "2.3.6",
-        "symfony/serializer" : "*"
+        "jms/serializer" : "0.16.0"
     }
 }

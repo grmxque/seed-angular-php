@@ -3,4 +3,5 @@ RewriteEngine On
 DirectoryIndex index.html
 
 RewriteBase /testjerem/
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^api index.php [QSA,L]
