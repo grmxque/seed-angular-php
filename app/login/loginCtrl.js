@@ -1,22 +1,12 @@
-'use strict';
-
-var app = angular.module('myApp.login', ['ngRoute'])
-
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/login', {
-        templateUrl: 'app/login/login.html',
-        controller: 'loginCtrl'
-    });
-}]);
-
-app.controller('loginCtrl',['$scope', '$location', function($scope,$location) {
+function loginCtrl($scope, $location, loginService){
     $scope.user = {
         username : "" ,
         pwd : ""
     }
 
     $scope.submit = function() {
-        $location.path('/dashboard');
+
+        var credentials = loginService.initiate($scope.user);
         console.log("Connexion succesfull");
     }
-}]);
+}

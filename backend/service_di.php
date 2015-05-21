@@ -1,8 +1,12 @@
 <?php
 
-/*$container ['indicateurService'] = function ($c) {
-	return new IndicateurService ( $c ['indicateurRepository'] );
+use \utils\LoggerResolver;
+use \service\UserService;
+
+$container['LogerResolver'] = function($c) {
+    return new LoggerResolver();
 };
-$container ['tailleExceptionnelleService'] = function ($c) {
-	return new TailleExceptionnelleService ( $c ['tailleExceptionnelleRepository'], $c ['commandeRepository'], $c ['pdfGenerator'], $c ['bonPreparationRepository'], $c ['crmController'] );
-};*/
+
+$container['UserService'] = function($c) {
+    return new UserService($c['LogerResolver']);
+};

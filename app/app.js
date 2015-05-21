@@ -1,12 +1,15 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.login',
-  'myApp.dashboard',
+var myApp = angular.module('myApp', [
+  'ngRoute', 'restangular',
+  'myApp.login', 'myApp.dashboard',
   'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/login'});
+]);
+
+myApp.config(['$routeProvider', 'RestangularProvider', function($routeProvider, RestangularProvider) {
+    $routeProvider.otherwise({redirectTo: '/login'});
+
+    var baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + '/api';
+    RestangularProvider.setBaseUrl(baseUrl);
 }]);
