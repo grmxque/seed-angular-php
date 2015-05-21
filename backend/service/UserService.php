@@ -16,4 +16,16 @@ class UserService {
     public function __construct(LoggerResolver $loggerResolver){
         $this->logger = $loggerResolver->getLogger();
     }
+
+    public function validateCredentials($username, $pwd){
+        return $username;
+    }
+
+    public function updateToken($user, $token, $expirationToken){
+
+    }
+
+    public function validateToken($token){
+        //Token exist and not expired
+    }
 } 

@@ -9,11 +9,15 @@
 namespace controller;
 
 use config\ControllerConfigurer;
+use service\UserService;
 
 class UserController extends ControllerConfigurer{
 
-    public function __construct(){
+    private $service;
+
+    public function __construct(UserService $userService){
         parent::__construct ();
+        $this->service = $userService;
     }
 
     function routeRegister(){
@@ -28,26 +32,29 @@ class UserController extends ControllerConfigurer{
     }
 
     public function login($username, $password) {
+        $user = $this->service->validateCredentials($username, $password);
+        if(!empty($user)){
+            $arrRtn['user'] = $user;
+            $arrRtn['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 
-        /*if ($username == 'admin' && $password == 'mysecurepass') { //implement your own validation method against your db
+            $tokenExpiration = date('Y-m-d H:i:s', strtotime('+2 hour'));
 
-            $arrRtn['user'] = 'Chuck Norris'; //Just return the user name for reference
-            $arrRtn['token'] = bin2hex(openssl_random_pseudo_bytes(16)); //generate a random token
+            $this->service->updateToken($arrRtn['user'], $arrRtn['token'], $tokenExpiration);
 
-            $tokenExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));//the expiration date will be in one hour from the current moment
-
-            CUser::updateToken($username, $arr['token'], $tokenExpiration); //This function can update the token on the database and set the expiration date-time, implement your own
-            return json_encode($arrRtn);
+            return $arrRtn;
         }
 
-        return false;*/
-
-        $user = array(
-            'user' => 'chuck norris',
-            'token' => '1JUcleYpx7eO946uTaFv3ih4wkl9vcL1'
-        );
-
-        return $user;
+        return false;
     }
+
+    static function validateToken(){
+        return true;
+    }
+
+    static function keepTokenALive(){
+
+    }
+
+
 
 } 

@@ -9,7 +9,7 @@ $container['TestController'] = function($c) {
 };
 
 $container['UserController'] = function($c) {
-    $ctrl = new UserController();
+    $ctrl = new UserController($c['UserService']);
     $ctrl->routeRegister();
     return $ctrl;
 };

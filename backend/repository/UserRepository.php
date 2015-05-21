@@ -8,7 +8,12 @@
 
 namespace repository;
 
+use Doctrine\ORM\EntityManager;
 
 class UserRepository {
+    private $entityManager;
 
+    public function __construct(EntityManager $entityManager){
+        $this->entityManager = $entityManager;
+    }
 } 
