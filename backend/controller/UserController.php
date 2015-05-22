@@ -10,14 +10,22 @@ namespace controller;
 
 use config\ControllerConfigurer;
 use service\UserService;
+use \JWT;
 
 class UserController extends ControllerConfigurer{
 
     private $service;
 
+    private $key;
+
+    private $token;
+
     public function __construct(UserService $userService){
         parent::__construct ();
         $this->service = $userService;
+
+        $parameters = parse_ini_file("backend/parameters.properties");
+        $this->key = $parameters['app.key'];
     }
 
     function routeRegister(){
@@ -34,20 +42,31 @@ class UserController extends ControllerConfigurer{
     public function login($username, $password) {
         $user = $this->service->validateCredentials($username, $password);
         if(!empty($user)){
-            $arrRtn['user'] = $user;
-            $arrRtn['token'] = bin2hex(openssl_random_pseudo_bytes(16));
+            $payload = array(
+                "user" => $user,
+                "exp" => strtotime('+2 hour'));
+            $encoded = JWT::encode($payload, $this->key);
 
-            $tokenExpiration = date('Y-m-d H:i:s', strtotime('+2 hour'));
+            JWT::decode($encoded, $this->key, array('HS256'));
 
-            $this->service->updateToken($arrRtn['user'], $arrRtn['token'], $tokenExpiration);
+            $this->service->updateToken($payload, $encoded);
 
-            return $arrRtn;
+            return $encoded;
+        }else{
+            $res = $this->app->response()->status(401);;
         }
 
         return false;
     }
 
-    static function validateToken(){
+    private function createToken(){
+        $key = $this->key;
+        $token = array(
+
+        );
+    }
+
+    static function validateToken($encoded){
         return true;
     }
 

@@ -5,6 +5,7 @@
         "slim/extras": "2.0.3",
         "pimple/pimple":"v3.0.0",
         "doctrine/orm": "2.5.0",
-        "jms/serializer" : "0.16.0"
+        "jms/serializer" : "0.16.0",
+        "firebase/php-jwt": "v2.1.0"
     }
 }

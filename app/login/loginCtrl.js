@@ -1,12 +1,17 @@
-function loginCtrl($scope, $location, loginService){
+function loginCtrl($scope, $location, $window, loginService){
     $scope.user = {
         username : "" ,
         pwd : ""
     }
 
-    $scope.submit = function() {
-
+    $scope.signIn = function() {
         var credentials = loginService.initiate($scope.user);
-        console.log("Connexion succesfull");
+
+        credentials.then(function(token){
+            $window.sessionStorage.token = token;
+            //$location.path('/dashboard');
+        }, function(response) {
+            console.log("Error with status code", response.status);
+        });
     }
 }

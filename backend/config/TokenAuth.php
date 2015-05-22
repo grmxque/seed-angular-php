@@ -5,11 +5,15 @@ namespace config;
 use \Slim\Middleware;
 
 use controller\UserController;
+use \JWT;
 
 class TokenAuth extends Middleware {
 
-    public function __construct() {
+    private $key;
 
+    public function __construct() {
+        $parameters = parse_ini_file("backend/parameters.properties");
+        $this->key = $parameters['app.key'];
     }
 
     public function deny_access() {
@@ -24,7 +28,13 @@ class TokenAuth extends Middleware {
      * @return bool
      */
     public function authenticate($token) {
-        return UserController::validateToken($token);
+        $allow = true;
+
+        if(!empty($token)){
+            $allow = JWT::decode($token, $this->key, array('HS256'));
+        }
+
+        return $allow;
     }
 
     /**
@@ -32,6 +42,7 @@ class TokenAuth extends Middleware {
      *
      */
     public function call() {
+
         $tokenAuth = $this->app->request->headers->get('Authorization');
 
         if ($this->authenticate($tokenAuth)) {

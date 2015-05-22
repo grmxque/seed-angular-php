@@ -18,10 +18,10 @@ class UserService {
     }
 
     public function validateCredentials($username, $pwd){
-        return $username;
+        return false;
     }
 
-    public function updateToken($user, $token, $expirationToken){
+    public function updateToken($payload, $encoded){
 
     }
 
