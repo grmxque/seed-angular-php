@@ -16,4 +16,8 @@ class UserRepository {
     public function __construct(EntityManager $entityManager){
         $this->entityManager = $entityManager;
     }
+
+    public function validateCredentials(){
+
+    }
 } 

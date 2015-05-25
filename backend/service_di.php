@@ -8,5 +8,5 @@ $container['LogerResolver'] = function($c) {
 };
 
 $container['UserService'] = function($c) {
-    return new UserService($c['LogerResolver'], $c['userRepository']);
+    return new UserService($c['entityManager'], $c['LogerResolver'], $c['userRepository']);
 };
