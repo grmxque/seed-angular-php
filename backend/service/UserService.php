@@ -13,10 +13,9 @@ use repository\UserRepository;
 use utils\LoggerResolver;
 
 class UserService {
+
     private $entityManager;
-
     private $logger;
-
     private $repository;
 
     public function __construct(EntityManager $entityManager, LoggerResolver $loggerResolver, UserRepository $userRepository){
@@ -25,20 +24,21 @@ class UserService {
         $this->repository = $userRepository;
     }
 
+    /**
+     * Retourn l'id d'un utilisateur en fonction de $username et $pwd, null si aucune correspondance.
+     *
+     * @param $username
+     * @param $pwd
+     * @return null|userId
+     */
     public function validateCredentials($username, $pwd){
-        return $this->entityManager->getRepository('User')->findOneBy(
-          array(
-              'username' => $username,
-              'password' => $pwd
-          )
+        $user = $this->entityManager->getRepository('User')->findOneBy(
+            array(
+                'username' => $username,
+                'password' => $pwd
+            )
         );
-    }
 
-    public function updateToken($payload, $encoded){
-
-    }
-
-    public function validateToken($token){
-        //Token exist and not expired
+        return (empty($user)?null:$user->getId());
     }
 } 

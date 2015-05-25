@@ -9,7 +9,7 @@ function loginCtrl($scope, $location, $window, loginService){
 
         credentials.then(function(token){
             $window.sessionStorage.token = token;
-            //$location.path('/dashboard');
+            $location.path('/dashboard');
         }, function(response) {
             console.log("Error with status code", response.status);
         });

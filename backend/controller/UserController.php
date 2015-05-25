@@ -15,10 +15,7 @@ use \JWT;
 class UserController extends ControllerConfigurer{
 
     private $service;
-
     private $key;
-
-    private $token;
 
     public function __construct(UserService $userService){
         parent::__construct ();
@@ -39,41 +36,39 @@ class UserController extends ControllerConfigurer{
 
     }
 
+    /**
+     * Création d'un token si crédentials validé ou access non autorisé
+     *
+     * @param $username
+     * @param $password
+     * @return null|string
+     */
     public function login($username, $password) {
-        $user = $this->service->validateCredentials($username, $password);
-        if(!empty($user)){
-            $payload = array(
-                "user" => $user,
-                "exp" => strtotime('+2 hour'));
-            $encoded = JWT::encode($payload, $this->key);
+        $userId = $this->service->validateCredentials($username, $password);
 
-            JWT::decode($encoded, $this->key, array('HS256'));
-
-            $this->service->updateToken($payload, $encoded);
-
-            return $encoded;
+        if(!empty($userId)){
+            $token = $this->createToken($userId);
+            return $token;
         }else{
-            $res = $this->app->response()->status(401);;
+            $this->app->response()->status(401);
         }
 
         return false;
     }
 
-    private function createToken(){
-        $key = $this->key;
-        $token = array(
+    /**
+     * Création du token JWT
+     *
+     * @param $userId
+     * @return string
+     */
+    private function createToken($userId){
+        $payload = array(
+            "iss" => $userId,
+            "exp" => strtotime('+2 hour'));
 
-        );
+        /*JWT::decode($encoded, $this->key, array('HS256'));*/
+
+        return JWT::encode($payload, $this->key);
     }
-
-    static function validateToken($encoded){
-        return true;
-    }
-
-    static function keepTokenALive(){
-
-    }
-
-
-
-} 
+}
