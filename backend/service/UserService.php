@@ -8,17 +8,30 @@
 
 namespace service;
 
+use Doctrine\ORM\EntityManager;
+use repository\UserRepository;
 use utils\LoggerResolver;
 
 class UserService {
+    private $entityManager;
+
     private $logger;
 
-    public function __construct(LoggerResolver $loggerResolver){
+    private $repository;
+
+    public function __construct(EntityManager $entityManager, LoggerResolver $loggerResolver, UserRepository $userRepository){
+        $this->entityManager = $entityManager;
         $this->logger = $loggerResolver->getLogger();
+        $this->repository = $userRepository;
     }
 
     public function validateCredentials($username, $pwd){
-        return $username;
+        return $this->entityManager->getRepository('User')->findOneBy(
+          array(
+              'username' => $username,
+              'password' => $pwd
+          )
+        );
     }
 
     public function updateToken($user, $token, $expirationToken){

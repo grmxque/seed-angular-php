@@ -2,6 +2,7 @@
 
 use config\AppConfigurer;
 
+
 /* ************************* SETTINGS SERVEUR ************************* */
 session_cache_limiter(false);
 session_start ();
