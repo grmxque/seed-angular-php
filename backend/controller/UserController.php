@@ -10,65 +10,48 @@ namespace controller;
 
 use config\ControllerConfigurer;
 use service\UserService;
-use \JWT;
 
 class UserController extends ControllerConfigurer{
 
     private $service;
-    private $key;
+    private $salt;
 
     public function __construct(UserService $userService){
         parent::__construct ();
         $this->service = $userService;
-
         $parameters = parse_ini_file("backend/parameters.properties");
-        $this->key = $parameters['app.key'];
+        $this->salt = $parameters['app.salt'];
     }
 
     function routeRegister(){
         $that = $this;
 
-        $this->app->post('/api/login', function() use($that) {
+        $this->app->post('/api/signIn', function() use($that) {
             $credentials = $this->serializeJsonToObject($this->app->request->getBody());
-            $result = $that->login($credentials->username, $credentials->pwd);
+            $result = $that->signIn($credentials->username, $credentials->pwd);
             $this->setBody($this->serialize($result));
         });
 
     }
 
     /**
-     * Création d'un token si crédentials validé ou access non autorisé
+     * Création d'un token si crédentials validés ou access non autorisé
      *
      * @param $username
      * @param $password
      * @return null|string
      */
-    public function login($username, $password) {
-        $userId = $this->service->validateCredentials($username, $password);
+    public function signIn($username, $password) {
+        $hash = password_hash($password, PASSWORD_BCRYPT, array('salt' => $this->salt, "cost" => 10));
+
+        $userId = $this->service->validateCredentials($username, $hash);
 
         if(!empty($userId)){
-            $token = $this->createToken($userId);
-            return $token;
+            return $this->service->createToken($userId);
         }else{
             $this->app->response()->status(401);
         }
 
         return false;
-    }
-
-    /**
-     * Création du token JWT
-     *
-     * @param $userId
-     * @return string
-     */
-    private function createToken($userId){
-        $payload = array(
-            "iss" => $userId,
-            "exp" => strtotime('+2 hour'));
-
-        /*JWT::decode($encoded, $this->key, array('HS256'));*/
-
-        return JWT::encode($payload, $this->key);
     }
 }

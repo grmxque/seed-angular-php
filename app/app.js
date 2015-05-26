@@ -19,7 +19,7 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
 
             // Pour chaque requête à l'api, on envoi le token
             if ($window.sessionStorage.token && $window.sessionStorage.token.length < 40 && config.url.indexOf("/api") > -1) {
-                config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                config.headers.Authorization = $window.sessionStorage.token;
             }
 
             return config;

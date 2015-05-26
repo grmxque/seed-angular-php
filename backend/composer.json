@@ -6,6 +6,7 @@
         "pimple/pimple":"v3.0.0",
         "doctrine/orm": "2.5.0",
         "jms/serializer" : "0.16.0",
-        "firebase/php-jwt": "v2.1.0"
+        "firebase/php-jwt": "v2.1.0",
+        "ircmaxell/password-compat": "v1.0.4"
     }
 }

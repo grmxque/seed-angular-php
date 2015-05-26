@@ -3,15 +3,19 @@ function loginCtrl($scope, $location, $window, loginService){
         username : "" ,
         pwd : ""
     }
+    $scope.loading = false;
+    $scope.authError = "";
 
-    $scope.signIn = function() {
+    $scope.signIn = function(){
         var credentials = loginService.initiate($scope.user);
-
+        $scope.loading = true;
         credentials.then(function(token){
             $window.sessionStorage.token = token;
             $location.path('/dashboard');
         }, function(response) {
-            console.log("Error with status code", response.status);
+            $scope.loading = false;
+            $scope.authError = "Authentication failed, check your credentials";
+            console.log("Authentication failed: ", response.status, "-", response.statusText);
         });
     }
 }
